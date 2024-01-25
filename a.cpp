@@ -54,51 +54,7 @@ typedef pair<ll,ll> pl;
 
 void test_cases(){
     // yaha likhna hai code 
-    int n;
-    cin >> n;
-    vector<vector<string>>ans(n,vector<string>(n));
-
-
-    int row = n;
-    int col = n;
-    int sr = 0,er = row-1, sc = 0, ec = col-1;
-    int cnt = 1;
-    while(sr <= er && sc <= ec)
-    {
-        for(int i = sc; i <= ec ; i++)
-        {
-            ans[sr][i] = to_string(cnt);
-            cnt++;
-        }
-        sr++;
-        for(int i = sr; i <= er ; i++)
-        {
-            ans[i][ec] = to_string(cnt);
-            cnt++;
-        }
-        ec--;
-        if(sr<=er)
-        for(int i = ec; i >= sc ; i--)
-        {
-            ans[er][i] = to_string(cnt);
-            cnt++;
-        }
-        er--;
-        if(sc<=ec)
-        for(int i = er; i >= sr ; i--)
-        {
-            ans[i][sc] = to_string(cnt);
-            cnt++;
-        }
-        sc++;
-    }
-    ans[n/2][n/2] = "T";
-    rep(i,0,n){
-        rep(j,0,n){
-            cout << ans[i][j] << " ";
-        }
-        cout << endl;
-    }
+    
 }
 int main(){
     ll tt = 1;
