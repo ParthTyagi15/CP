@@ -54,7 +54,27 @@ typedef pair<ll, ll> pl;
 
 void test_cases()
 {
+    int n;
+    cin >> n;
+    vector<int>a(n,0);
+    vector<int>b(n,0);
+
+    for(auto &it : a)cin >> it;
+    for(auto &it : b)cin >> it;
+    vector<pair<int,int>>op1;
     
+    for(int i = 0; i < n; i++){
+        op1.push_back({a[i],b[i]});
+    }
+    sort(all(op1));
+    for(int i = 0; i < n; i++){
+        cout << op1[i].first << " ";
+    }
+    cout << endl;
+    for(int i = 0; i < n; i++){
+        cout << op1[i].second << " ";
+    }
+    cout << endl;
 }
 
 int main()

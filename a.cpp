@@ -10,7 +10,7 @@ typedef double long dl;
 //#define zrobits(x) __builtin_ctzll(x)
 #define sz(x) (ll)(x).size()
 #define deci(x, y) fixed<<setprecision(y)<<x
-#define all(a) a.begin(),a.end()
+//#define all(a) a.begin(),a.end()
 #define dbg(x) cout<<#x<<"="<<x<<"\n"
 #define dbg2(x,y) cout<<#x<<"="<<x<<","<<#y<<"="<<y<<"\n"
 #define dbg3(x,y,z) cout<<#x<<"="<<x<<","<<#y<<"="<<y<<"," <<#z<<"="<<z<<"\n"
@@ -46,24 +46,24 @@ typedef pair<ll,ll> pl;
 #define mp make_pair
 #define mine(a) *min_element(all(a))
 #define maxe(a) *max_element(all(a))
-#define sort(a) sort(all(a))
+//#define sort(a) sort(all(a))
 #define flip(a) reverse(all(a))
 #define rev(a) sort(a.begin(),a.end(),greater<ll>())
 #define sum(a) accumulate(all(a),0)
 #define add(a,i,k) accumulate(a.begin()+i,a.begin()+k,0)
 
 void test_cases(){
-    // yaha likhna hai code 
+       
     
 }
 int main(){
-    ll tt = 1;
+    ll tt;
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
     //freopen("input.txt", "r", stdin);
     //freopen("output.txt", "w", stdout);
-    // cin>>tt;
+    cin>>tt;
     while(tt--){
         test_cases();
     }

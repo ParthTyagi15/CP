@@ -54,7 +54,9 @@ typedef pair<ll, ll> pl;
 
 void test_cases()
 {
-    
+    int n,m;
+    cin >> n >> m;
+    cout << (m / 2) * n << endl;
 }
 
 int main()

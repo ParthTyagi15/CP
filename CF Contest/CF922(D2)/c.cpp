@@ -54,7 +54,35 @@ typedef pair<ll, ll> pl;
 
 void test_cases()
 {
+    // long long a, b, c;
+    // cin >> a >> b >> c;
+    // // if(a < b)swap(a,b);
+
+    // long long dif;
+
+    // if (a > b)
+    //     swap(a, b);
+    // dif = b - a;
+
+    // long long z = 0;
+    // for (int i = 60; i >= 0; --i)
+    // {
+    //     if (((a ^ b) & (1LL << i)) and (z + (1LL << i) <= c))
+    //     {
+    //         if ((a & (1LL << i)) == 0)
+    //         {
+    //             if ((1LL << (i)) <= dif)
+    //             {
+    //                 z += (1LL << (i));
+    //                 dif -= (1LL << (i + 1));
+    //             }
+    //         }
+    //     }
+    // }
+
+    // cout << abs(dif) << endl;
     
+
 }
 
 int main()
