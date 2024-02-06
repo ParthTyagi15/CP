@@ -13,6 +13,7 @@ int main()
     }
     for (int i = 0; i < m; i++)
     {
+        // multiset lower bound returns the first element equal in the multiset, if element is not present then it return next element just greater than the key.
         int x;
         cin >> x;
         if (price.lower_bound(-x) == price.end())
