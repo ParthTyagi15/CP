@@ -16,6 +16,7 @@ typedef double long dl;
 #define dbg3(x, y, z) cout << #x << "=" << x << "," << #y << "=" << y << "," << #z << "=" << z << "\n"
 #define mem0(x) memset(x, 0, sizeof x)
 #define mem1(x) memset(x, -1, sizeof x)
+#define find(a, x) find(all(a), x)
 #define bs(a, x) binary_search(all(a), x)
 #define lb(a, x) lower_bound(all(a), x)
 #define ub(a, x) upper_bound(all(a), x)
@@ -50,20 +51,29 @@ typedef pair<ll, ll> pl;
 #define rev(a) sort(a.begin(), a.end(), greater<ll>())
 #define sum(a) accumulate(all(a), 0)
 #define add(a, i, k) accumulate(a.begin() + i, a.begin() + k, 0)
-#define parth                         \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(NULL);                    \
-    cout.tie(NULL)
 
 void test_cases()
 {
     // yaha likhna hai code
+    int n;
+    cin >> n;
+    int t = 3;
+    string ans = "aaa";
+    n -= 3;
+    for(int i = 2; i >= 0; i--){
+        ans[i] += min(25,n);
+        n -= min(25,n);
+    }
+    cout << ans << endl;
+    // cout << (char)('a' + 23) << endl;
 }
 
 int main()
 {
     ll tt = 1;
-    parth;
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
     cin >> tt;

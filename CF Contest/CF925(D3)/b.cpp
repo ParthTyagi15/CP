@@ -16,6 +16,7 @@ typedef double long dl;
 #define dbg3(x, y, z) cout << #x << "=" << x << "," << #y << "=" << y << "," << #z << "=" << z << "\n"
 #define mem0(x) memset(x, 0, sizeof x)
 #define mem1(x) memset(x, -1, sizeof x)
+#define find(a, x) find(all(a), x)
 #define bs(a, x) binary_search(all(a), x)
 #define lb(a, x) lower_bound(all(a), x)
 #define ub(a, x) upper_bound(all(a), x)
@@ -50,20 +51,52 @@ typedef pair<ll, ll> pl;
 #define rev(a) sort(a.begin(), a.end(), greater<ll>())
 #define sum(a) accumulate(all(a), 0)
 #define add(a, i, k) accumulate(a.begin() + i, a.begin() + k, 0)
-#define parth                         \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(NULL);                    \
-    cout.tie(NULL)
 
 void test_cases()
 {
     // yaha likhna hai code
+    int n;
+    cin >> n;
+    vector<int> arr(n);
+    int sum = 0;
+    for (auto &it : arr)
+    {
+        cin >> it;
+        sum += it;
+    }
+    if (sum % n)
+    {
+        No;
+        return;
+    }
+
+    int tar = sum / n;
+    int carry = 0;
+    for(int i = 0; i < n; i++){
+        if(arr[i] == tar)continue;
+        if(arr[i] > tar){
+            carry += arr[i] - tar;
+        }
+        else{
+            if(tar - arr[i] <= carry){
+                carry -= (tar - arr[i]);
+            }
+            else{
+                No;
+                return;
+            }
+        }
+    }
+    Yes;
+    return;
 }
 
 int main()
 {
     ll tt = 1;
-    parth;
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
     cin >> tt;

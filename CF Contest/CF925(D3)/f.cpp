@@ -58,6 +58,48 @@ typedef pair<ll, ll> pl;
 void test_cases()
 {
     // yaha likhna hai code
+    int n, k;
+    cin >> n >> k;
+    vector<int> adj[n + 1];
+    vector<int> vis(n + 1, 0);
+    vector<int> pathVis(n + 1, 0);
+    vector<int> indeg(n + 1, 0);
+    for (int i = 0; i < k; i++)
+    {
+        vector<int> v(n);
+        for (int j = 0; j < n; j++)
+            cin >> v[j];
+        for (int j = 1; j + 1 < n; j++)
+        {
+            adj[v[j]].push_back(v[j + 1]);
+            indeg[v[j + 1]]++;
+        }
+    }
+    queue<int> q;
+    for (int i = 1; i <= n; i++)
+    {
+        if (indeg[i] == 0)
+            q.push(i);
+    }
+    int cnt = 0;
+    while (!q.empty())
+    {
+        int node = q.front();
+        q.pop();
+        cnt++;
+        for (auto it : adj[node])
+        {
+            indeg[it]--;
+            if (indeg[it] == 0)
+                q.push(it);
+        }
+    }
+    if (cnt == n)
+    {
+        Yes;
+    }
+    else
+        No;
 }
 
 int main()

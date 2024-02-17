@@ -16,6 +16,7 @@ typedef double long dl;
 #define dbg3(x, y, z) cout << #x << "=" << x << "," << #y << "=" << y << "," << #z << "=" << z << "\n"
 #define mem0(x) memset(x, 0, sizeof x)
 #define mem1(x) memset(x, -1, sizeof x)
+#define find(a, x) find(all(a), x)
 #define bs(a, x) binary_search(all(a), x)
 #define lb(a, x) lower_bound(all(a), x)
 #define ub(a, x) upper_bound(all(a), x)
@@ -50,20 +51,43 @@ typedef pair<ll, ll> pl;
 #define rev(a) sort(a.begin(), a.end(), greater<ll>())
 #define sum(a) accumulate(all(a), 0)
 #define add(a, i, k) accumulate(a.begin() + i, a.begin() + k, 0)
-#define parth                         \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(NULL);                    \
-    cout.tie(NULL)
 
 void test_cases()
 {
     // yaha likhna hai code
+    int n;
+    cin >> n;
+    vector<int> arr(n);
+    for (auto &it : arr)
+        cin >> it;
+
+    if(arr[0] == arr[n - 1]){
+        int num = arr[0];
+        int i = 1, j = n - 2;
+        while(i < n and arr[i] == num)i++;
+        while(j >= 0 and arr[j] == num)j--;
+
+        if(j < i)cout << 0 << endl;
+        else cout << (j - i + 1) << endl;
+    }
+    else{
+        int i = 0;
+        while(i + 1 < n and arr[i] == arr[i + 1])i++;
+        int j = n - 1;
+        while(j - 1 >= 0 and arr[j] == arr[j - 1])j--;
+
+        // cout << i << " " << j << endl;
+        cout << min(n - i - 1, j) << endl;
+        // cout << n - 1 << endl;
+    }
 }
 
 int main()
 {
     ll tt = 1;
-    parth;
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
     cin >> tt;

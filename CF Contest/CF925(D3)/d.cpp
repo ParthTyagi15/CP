@@ -16,6 +16,7 @@ typedef double long dl;
 #define dbg3(x, y, z) cout << #x << "=" << x << "," << #y << "=" << y << "," << #z << "=" << z << "\n"
 #define mem0(x) memset(x, 0, sizeof x)
 #define mem1(x) memset(x, -1, sizeof x)
+// #define find(a, x) find(all(a), x)
 #define bs(a, x) binary_search(all(a), x)
 #define lb(a, x) lower_bound(all(a), x)
 #define ub(a, x) upper_bound(all(a), x)
@@ -58,12 +59,29 @@ typedef pair<ll, ll> pl;
 void test_cases()
 {
     // yaha likhna hai code
+    ll n, x, y;
+    cin >> n >> x >> y;
+
+    vl arr(n);
+    for (auto &it : arr)
+        cin >> it;
+    map<pair<ll, ll>, ll> mp;
+    ll cnt = 0;
+    for (ll i = 0; i < n; i++)
+    {
+        if (mp.find({(x - (arr[i] % x)) % x, (arr[i] % y)}) != mp.end())
+        {
+            cnt += mp[{(x - (arr[i] % x)) % x, (arr[i] % y)}];
+        }
+        mp[{arr[i] % x, arr[i] % y}]++;
+    }
+    cout << cnt << endl;
 }
 
 int main()
 {
-    ll tt = 1;
     parth;
+    ll tt = 1;
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
     cin >> tt;
