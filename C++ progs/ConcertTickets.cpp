@@ -24,5 +24,25 @@ int main()
             price.erase(price.lower_bound(-x));
         }
     }
-    return 0;
+    // TLE
+    // vector<int> price;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     int a;
+    //     cin >> a;
+    //     price.push_back(-a);
+    // }
+    // sort(price.begin(), price.end());
+    // for (int i = 0; i < m; i++)
+    // {
+    //     int x;
+    //     cin >> x;
+    //     if (lower_bound(price.begin(),price.end(),-x) == price.end())
+    //         cout << -1 << "\n";
+    //     else{
+    //         cout << -(*lower_bound(price.begin(),price.end(),-x)) << "\n";
+    //         price.erase(lower_bound(price.begin(),price.end(),-x));
+    //     }
+    // }
+    // return 0;
 }
