@@ -39,53 +39,44 @@ typedef pair<ll, ll> pl;
 #define mine(a) *min_element(all(a))
 #define maxe(a) *max_element(all(a))
 
-int x[MAXN];
-
-int y[MAXN];
-
-int z[MAXN];
+void solve()
+{
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    for (auto &x : a)
+        cin >> x;
+    int left = 0, right = n - 1;
+    for(int i = 0; i < n; i++){
+        if(a[i] == 1){
+            left = i;
+            break;
+        }
+    }
+    for(int i = n - 1; i >= 0; i--){
+        if(a[i] == 1){
+            right = i;
+            break;
+        }
+    }
+    int ans = 0;
+    for(int i = left; i <= right; i++){
+        if(a[i] == 0){
+            ans++;
+        }
+    }
+    cout << ans << endl;
+    return;
+}
 
 int main()
 {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int t;
+    cin >> t;
+    while (t--)
+        solve();
 
-    int n, m, ans, y0, y1;
-
-    cin >> n >> m >> y0 >> y1;
-
-    for (int i = 0; i < n; ++i)
-    {
-        cin >> x[i];
-    }
-    y[0] = -INF;
-    for (int i = 1; i <= m; ++i)
-    {
-        cin >> y[i];
-    }
-    y[m + 1] = INF;
-
-    m += 2;
-
-    fill(z, z + m, INF);
-
-    ans = 0;
-
-    for (int i = 0; i < n; ++i)
-
-    {
-
-        int j = lower_bound(y, y + m, x[i]) - y;
-
-        int d = min(x[i] - y[j - 1], y[j] - x[i]);
-
-        if (y[j] - x[i] > d || (x[i] - y[j - 1] == d && (z[j - 1] == INF || z[j - 1] == d)))
-            --j;
-
-        if (z[j] == INF || z[j] == d)
-            ++ans;
-
-        z[j] = min(z[j], d);
-    }
-
-    cout << n - ans << "\n";
     return 0;
 }
