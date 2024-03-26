@@ -5,7 +5,8 @@ using ll = long long;
 const int maxN = (int)2e5 + 5;
 
 vector<int> adj[maxN];
-vector<int> dist(maxN, 0);
+vector<int> picked(maxN, 0);
+int cnt = 0;
 
 void dfs(int node, int par)
 {
@@ -13,9 +14,13 @@ void dfs(int node, int par)
     {
         if (it != par)
         {
-            dist[it] = dist[node] + 1;
             dfs(it, node);
         }
+    }
+    if(par != 0 and !picked[node] and !picked[par]){
+        cnt += 1;
+        picked[node] = 1;
+        picked[par] = 1;
     }
 }
 
@@ -33,19 +38,6 @@ int main()
         adj[b].push_back(a);
     }
     dfs(1, 0);
-    int farthest = 0;
-    for(int i = 1; i <= n; i++){
-        if(dist[i] > dist[farthest]){
-            farthest = i;
-        }
-    }
-    dist[farthest] = 0;
-    dfs(farthest, 0);
-    for(int i = 1; i <= n; i++){
-        if(dist[i] > dist[farthest]){
-            farthest = i;
-        }
-    }
-    cout << dist[farthest] << endl;
+    cout << cnt << "\n";
     return 0;
 }
