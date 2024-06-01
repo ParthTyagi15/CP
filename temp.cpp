@@ -7,56 +7,69 @@ using ll = long long;
     cin.tie(0);              \
     cout.tie(0)
 
-const int maxN = (int)(2e5 + 5);
+#define endl "\n"
+#define pii pair<int, int>
 
-void solve()
-{
-    ll n, c, d;
-    cin >> n >> c >> d;
-    unordered_map<ll, ll> mp;
-    ll a11 = 1e9;
-    for (int i = 0; i < n * n; i++)
-    {
-        ll x;
-        cin >> x;
-        a11 = min(a11, x);
-        mp[x] += 1;
-    }
-    ll first = a11;
-    for (int i = 0; i < n; i++)
-    {
-        if (i > 0)
-        {
-            first += c;
+int N, M;
+vector<vector<int>>adj;
+vector<int>vis;
+int timer = 1;
+vector<vector<int>>res;
+vector<int>low, tin;
+
+void dfs(int node, int par = -1){
+    vis[node] = 1;
+    low[node] = tin[node] = timer++;
+    for(auto x : adj[node]){
+        if(x == par)continue;
+        if(vis[x]){
+            low[node] = min(low[node], tin[x]);
         }
-        ll x = first;
-        for (int j = 0; j < n; j++)
-        {
-            if (j > 0)
-            {
-                x += d;
-            }
-            // cout << x << " ";
-            if (mp.find(x) != mp.end())
-            {
-                mp[x] -= 1;
-                if (mp[x] == 0)
-                    mp.erase(x);
-            }
-            else{
-                cout << "No\n";
-                return;
+        else{
+            dfs(x, node);
+            low[node] = min(low[node], low[x]);
+            if(low[x] > tin[node]){
+                res.push_back({min(node, x), max(node, x)});
             }
         }
-        // cout << endl;
     }
-    if (mp.empty())
-    {
-        cout << "Yes\n";
+}
+
+void solve(int test_case){
+    res.clear();
+    cin >> N >> M;
+    tin.clear();
+    low.clear();
+    tin.resize(N + 1, -1);
+    low.resize(N + 1, -1);
+    vis.clear();
+    vis.resize(N + 1, 0);
+    adj.clear();
+    adj.resize(N + 1);
+    for(int i = 0; i < M; i++){
+        int a, b;
+        cin >> a >> b;
+        adj[a].push_back(b);
+        adj[b].push_back(a);
+    }
+    for(int i = 1; i <= N; i++){
+        if(!vis[i]){
+            dfs(i);
+        }
+    }
+    
+
+
+    cout << "Caso #" << test_case << endl;
+    if(res.size() == 0){
+        cout << "Sin bloqueos\n";
         return;
     }
-    cout << "No\n";
-    return;
+    sort(res.begin(), res.end());
+    cout << res.size() << endl;
+    for(auto it : res){
+        cout << it[0] << " " << it[1] << endl;
+    }
 }
 
 int main()
@@ -66,11 +79,10 @@ int main()
     IOS;
     int test_case = 1;
     cin >> test_case;
-
-    while (test_case--)
-        solve();
-
-    /*
-     */
+    int idx = 1;
+    while (test_case--){
+        solve(idx);
+        idx++;
+    }
     return 0;
 }
