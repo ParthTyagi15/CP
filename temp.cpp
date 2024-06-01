@@ -9,67 +9,60 @@ using ll = long long;
 
 #define endl "\n"
 #define pii pair<int, int>
+#define INF 1e15
 
-int N, M;
-vector<vector<int>>adj;
-vector<int>vis;
-int timer = 1;
-vector<vector<int>>res;
-vector<int>low, tin;
-
-void dfs(int node, int par = -1){
-    vis[node] = 1;
-    low[node] = tin[node] = timer++;
-    for(auto x : adj[node]){
-        if(x == par)continue;
-        if(vis[x]){
-            low[node] = min(low[node], tin[x]);
-        }
-        else{
-            dfs(x, node);
-            low[node] = min(low[node], low[x]);
-            if(low[x] > tin[node]){
-                res.push_back({min(node, x), max(node, x)});
+void solve(int test_case)
+{
+    ll N, M;
+    cin >> N >> M;
+    vector<vector<pii>> adj(N + 1);
+    for (int i = 0; i < M; i++)
+    {
+        ll x, y, w;
+        cin >> x >> y >> w;
+        adj[x].push_back({y, w});
+        adj[y].push_back({x, w});
+    }
+    vector<ll> dist(N + 1, INF);
+    vector<ll> par(N + 1, 0);
+    priority_queue<pair<ll, ll>, vector<pair<ll, ll>>, greater<pair<ll, ll>>> q;
+    dist[1] = 0;
+    q.push({dist[1], 1});
+    while (!q.empty())
+    {
+        auto [d, node] = q.top();
+        q.pop();
+        for (auto it : adj[node])
+        {
+            int v = it.first;
+            int wt = it.second;
+            if (dist[v] > dist[node] + wt)
+            {
+                dist[v] = dist[node] + wt;
+                par[v] = node;
+                q.push({dist[v], v});
             }
         }
     }
-}
-
-void solve(int test_case){
-    res.clear();
-    cin >> N >> M;
-    tin.clear();
-    low.clear();
-    tin.resize(N + 1, -1);
-    low.resize(N + 1, -1);
-    vis.clear();
-    vis.resize(N + 1, 0);
-    adj.clear();
-    adj.resize(N + 1);
-    for(int i = 0; i < M; i++){
-        int a, b;
-        cin >> a >> b;
-        adj[a].push_back(b);
-        adj[b].push_back(a);
+    if (dist[N] == INF)
+    {
+        cout << -1 << endl;
+        return ;
     }
-    for(int i = 1; i <= N; i++){
-        if(!vis[i]){
-            dfs(i);
-        }
+    vector<int> path;
+    int cur = N;
+    while (cur != 0)
+    {
+        path.push_back(cur);
+        cur = par[cur];
     }
-    
-
-
-    cout << "Caso #" << test_case << endl;
-    if(res.size() == 0){
-        cout << "Sin bloqueos\n";
-        return;
+    reverse(path.begin(), path.end());
+    for (auto it : path)
+    {
+        cout << it << " ";
     }
-    sort(res.begin(), res.end());
-    cout << res.size() << endl;
-    for(auto it : res){
-        cout << it[0] << " " << it[1] << endl;
-    }
+    cout << endl;
+    return;
 }
 
 int main()
@@ -78,9 +71,10 @@ int main()
     // freopen(".out", "w", stdout);
     IOS;
     int test_case = 1;
-    cin >> test_case;
+    // cin >> test_case;
     int idx = 1;
-    while (test_case--){
+    while (test_case--)
+    {
         solve(idx);
         idx++;
     }
