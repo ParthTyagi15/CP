@@ -1,114 +1,39 @@
 #include <bits/stdc++.h>
 using namespace std;
-// #pragma GCC optimize("Ofast, avx2")
-typedef long long ll;
-typedef double long dl;
-#define mod 1000000007
-#define mod2 998244353
-#define PI 3.141592653589793238
-// #define setbits(x) __builtin_popcountll(x)
-// #define zrobits(x) __builtin_ctzll(x)
-#define sz(x) (ll)(x).size()
-#define deci(x, y) fixed << setprecision(y) << x
-// #define all(a) a.begin(),a.end()
-#define dbg(x) cout << #x << "=" << x << "\n"
-#define dbg2(x, y) cout << #x << "=" << x << "," << #y << "=" << y << "\n"
-#define dbg3(x, y, z) cout << #x << "=" << x << "," << #y << "=" << y << "," << #z << "=" << z << "\n"
-#define mem0(x) memset(x, 0, sizeof x)
-#define mem1(x) memset(x, -1, sizeof x)
-#define find(a, x) find(all(a), x)
-#define bs(a, x) binary_search(all(a), x)
-#define lb(a, x) lower_bound(all(a), x)
-#define ub(a, x) upper_bound(all(a), x)
-#define gcd __gcd
-#define YES cout << "YES\n"
-#define NO cout << "NO\n"
-#define Yes cout << "Yes\n"
-#define No cout << "No\n"
-#define nl cout << "\n"
-#define endl "\n"
-#define rep(i, a, b) for (ll i = a; i < b; i++)
-#define rep2(i, a, b, k) for (ll i = a; i < b; i += k)
-#define per(i, a, b) for (ll i = a; i >= b; i--)
-#define per2(i, a, b, k) for (ll i = a; i >= b; i -= k)
-#define take(a) rep(i, 0, sz(a)) cin >> a[i]
-#define print(a) rep(i, 0, sz(a)) cout << a[i] << " "
-#define vl vector<ll>
-#define vc vector<char>
-#define vs vector<string>
-#define vd vector<dl>
-#define vpl vector<pair<ll, ll>>
-#define vtl vector<tuple<ll, ll, ll>>
-typedef pair<ll, ll> pl;
-#define pb push_back
-#define F first
-// #define S second
-#define mp make_pair
-#define mine(a) *min_element(all(a))
-#define maxe(a) *max_element(all(a))
-// #define sort(a) sort(all(a))
-#define flip(a) reverse(all(a))
-#define rev(a) sort(a.begin(), a.end(), greater<ll>())
-#define sum(a) accumulate(all(a), 0)
-#define add(a, i, k) accumulate(a.begin() + i, a.begin() + k, 0)
-
-int N;
-const int maxN = 2e5 + 5;
-vector<int> C(maxN);
-string S;
-
-int f(int idx, bool flag)
-{
-    if(idx == N - 2){
-        if(flag == 0){
-            return 0;
-        }
-        else{
-            if(S[idx] == S[idx + 1]){
-                return 1e9;
-            }
-            else{
-                return C[idx];
-            }
-        }
-    }
-
-    if(S[idx] != S[idx + 1]){
-        return f(idx + 1, flag);
-    }
-    else{
-        if(flag == 0){
-            return min(f(idx + 1, 1), f(idx + 1, 0) + C[idx]);
-        }
-        else{
-            return f(idx + 1, 0) + C[idx];
-        }
-    }
-    return 0;
-}
-
-void test_cases()
-{
-    cin >> N;
-    cin >> S;
-    for (int i = 0; i < N; i++)
-        cin >> C[i];
-    vector<vector<int>> dp(N, vector<int>(2, 1e9));
-    cout << f(0, 0) << endl;
-}
+using ll = long long;
+ 
+const ll MAX_N = (ll)1e6 + 5;
+const ll MOD = (ll)1e9 + 7;
+ 
 
 int main()
 {
-    ll tt = 1;
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    // freopen("input.txt", "r", stdin);
-    // freopen("output.txt", "w", stdout);
-    // cin >> tt;
-    while (tt--)
-    {
-        test_cases();
+    vector<vector<ll>> dp(MAX_N, vector<ll>(2, 0)); // dp[i][j] = number of ways to make tower of height i with (j == 0 meaning two blocks of width 1 and j == 1 meaning one block of width 2) j  as last block.
+
+    dp[1][0] = 1;
+    dp[1][1] = 1;
+
+    for(ll i = 2; i < MAX_N; i++){
+        // at position i we can place 2 block of width 1 in these cases:
+        // 1. i - 1th position had a block of width 1(we break the last height and start new height) or width 2 (no choice but to break the last height and start new height)
+        // 2. i - 1th position had 2 blocks of width 1 and we want to extend them.
+        // 3. i - 1th postion had 1 block of width 1 which we want to extend. (there are 2 ways)
+        dp[i][0] = ((dp[i - 1][0] + dp[i - 1][1]) + (dp[i - 1][0]) + (2 * dp[i - 1][0])) % MOD;
+
+
+        // at position i we can place 1 block of width 2 in these cases:
+        // 1. i - 1th position had 2 block of width 1(we break the last height and start new height)
+        // 2. i - 1th position had 1 block of width 2 which we can extend.
+        // 3. i - 1th position had 1 block of width 1 which we don't extend.
+        dp[i][1] = ((dp[i - 1][0]) + (dp[i - 1][1]) + (dp[i - 1][1])) % MOD;
+    }
+
+    ll tt;
+    cin >> tt;
+    while(tt--){
+        ll n;
+        cin >> n;
+        cout << (dp[n][0] + dp[n][1]) % MOD << endl;
     }
     return 0;
 }

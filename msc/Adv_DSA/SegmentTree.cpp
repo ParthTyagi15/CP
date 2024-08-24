@@ -2,6 +2,50 @@
 using namespace std;
 using ll = long long;
 
+// THIS IS NORMAL SEGMENT TREE THAT CAN BE USED FOR RANGE QUERIES AND POINT UPDATES
+class SegTree{
+public:
+    int N;
+    vector<int64_t>tree;
+    SegTree(int n) : N(n) {}
+    void build(vector<int>&arr) {
+        while (__builtin_popcount(N) != 1)
+        {
+            arr.push_back(0);
+            N++;
+        }
+        tree.resize(2 * N, 0);
+        for(int i = 0; i < N; i++){
+            tree[N + i] = arr[i];
+        }
+        for(int i = N - 1; i >= 1; i--){
+            tree[i] = tree[2 * i] + tree[2 * i + 1];
+        }
+    }
+
+    void update(int node, int low, int high, int left, int right, int val) {
+        if(left <= low and high <= right) {
+            tree[node] = val;
+            return;
+        }
+        if(high < left or low > right)return;
+        int mid = (low + high) / 2;
+        update(2 * node, low, mid, left, right, val);
+        update(2 * node + 1, mid + 1, high, left, right, val);
+        tree[node] = tree[2 * node] + tree[2 * node + 1];
+    }
+
+    int query(int node, int low, int high, int left, int right) {
+        if(left <= low and high <= right) {
+            return tree[node];
+        }
+        if(high < left or low > right)return 0;
+
+        int mid = (low + high) / 2;
+
+        return query(2 * node, low, mid, left, right) + query(2 * node + 1, mid + 1, high, left, right);
+    }
+};
 //SEGMENT TREE FOR RANGE SUM QUERIES -> CAN MODIFY IT ACCORDINGLY
 
 vector<ll> tree;
